@@ -4,7 +4,8 @@ const Article = require('./models/Article')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator')
-const {secret} = require("./config")
+const {secret} = require("./config");
+const Category = require('./models/Category');
 
 const generateAccessToken = (id, roles) => {
     const payload = {
@@ -69,7 +70,6 @@ class authController {
 
     async createArticle(req, res) {
         try {
-            console.log(req.user);
             const { heading, value, category } = req.body;
             const { id } = req.user;
 
@@ -90,6 +90,25 @@ class authController {
             console.log(e);
         }
     }
+
+    async getCategories(req, res) {
+        try {
+            const categories = await Category.find();
+            res.json(categories);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    // async cat(req, res) {
+    //     try {
+    //         const { label, value } = req.body;
+    //         const category = new Category({ label, value });
+    //         await category.save();
+    //         res.json('yep')
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
 }
 
 module.exports = new authController()
