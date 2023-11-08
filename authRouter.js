@@ -11,9 +11,10 @@ router.post('/registration', [
 ], controller.registration)
 router.post('/login', controller.login)
 router.get('/users', roleMiddleware(["ADMIN"]), controller.getUsers)
-router.post('/create', authMiddleware, controller.createArticle);
-router.get('/articles', controller.getArticles);
+router.post('/articles/create', authMiddleware, controller.createArticle);
+router.post('/articles', controller.getArticles);
+router.get('/articles/:id', controller.getArticleById);
 router.get('/categories', controller.getCategories);
-// router.post('/cat', controller.cat);
+router.post('/cat', controller.cat);
 
 module.exports = router
