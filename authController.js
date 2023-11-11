@@ -52,6 +52,8 @@ class authController {
             }
 
             const token = generateAccessToken(user._id, user.roles)
+            // const token = req.headers.authorization.split(' ')[1]
+            res.headers.authorization = token;
             return res.json({token})
         } catch (e) {
             console.log(e)
