@@ -3,8 +3,10 @@ const Article = require("../models/Article");
 
 class ArticleService {
     async getArticles(category) {
-        if (category === "All") return await Article.find();
-        else return await Article.find({ category: category });
+        if (category === "All") {
+            return Article.find();
+        }
+        return Article.find({ category: category });
     }
 
     async getArticleById(id){

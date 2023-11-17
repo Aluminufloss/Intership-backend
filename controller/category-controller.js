@@ -1,10 +1,10 @@
 const categoryService = require("../service/category-service");
 
-//Ошибка из бд
 class CategoryContoller {
   async getCategories(req, res, next) {
     try {
-      const categories = categoryService.getCategories();
+      const categories = await categoryService.getCategories();
+      console.log(categories)
       return res.json(categories);
     } catch (err) {
       next(err);

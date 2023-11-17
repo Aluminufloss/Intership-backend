@@ -5,7 +5,7 @@ class ArticleContoller {
     try {
       const { category } = req.body;
       const articles = await articleService.getArticles(category);
-      return res.json(articles);
+      return res.json({articles});
     } catch (err) {
       next(err);
     }
@@ -15,7 +15,7 @@ class ArticleContoller {
     try {
       const { id } = req.params;
       const article = await articleService.getArticleById(id);
-      return res.json(article);
+      return res.json({ article });
     } catch(err) {
       next(err);
     }

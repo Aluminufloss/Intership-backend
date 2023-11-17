@@ -11,7 +11,8 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:3000",
+  credentials: true,
   optionsSuccessStatus: 200,
 };
 
@@ -22,15 +23,17 @@ app.use("/", router);
 app.use(errorMiddleware);
 
 const start = async () => {
-  try {
-    mongoose.connect(process.env.CONNECT_STRING, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    app.listen(PORT, () => console.log(`server started on port ${PORT}`));
-  } catch (e) {
-    console.log(e);
-  }
+  await mongoose.connect(process.env.CONNECT_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  app.listen(PORT, (err) => {
+    if (err) {
+      console.log('FUCK!');
+      return;
+    }
+    console.log(`server started on port ${PORT}`);
+  });
 };
 
 start();
