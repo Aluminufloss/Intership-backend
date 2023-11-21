@@ -21,6 +21,7 @@ router.get("/refresh", userController.refresh);
 
 router.post("/articles", articleController.getArticles);
 router.post("/articles/create", authMiddleware, articleController.create);
+
 router.get("/articles/:id", articleController.getArticleById);
 
 router.get("/categories", categoryController.getCategories);
