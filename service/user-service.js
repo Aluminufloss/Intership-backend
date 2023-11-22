@@ -58,13 +58,38 @@ class UserService {
     
     const userData = tokenService.validateRefreshToken(refreshToken);
     const tokenFromDB = await tokenService.findToken(refreshToken);
-    if (!userData || !tokenFromDB) {
-      throw ApiError.UnauthorizedError();
+    if (!userData) {
+      throw ApiError.UnauthorizedError("Token didn't validate correctly");
+    }
+
+    if (!tokenFromDB) {
+      throw ApiError.UnauthorizedError("Token doesn't exist in database");
     }
 
     const user = await UserModel.findById(userData.id);
 
     return this.generateTokens(user);
+  }
+
+  async getUser(refreshToken) {
+    if (!refreshToken) {
+      return { user: { } }
+    }
+
+    const userData = tokenService.validateRefreshToken(refreshToken);
+    const tokenFromDB = await tokenService.findToken(refreshToken);
+    if (!userData) {
+      throw ApiError.UnauthorizedError("Token didn't validate correctly");
+    }
+
+    if (!tokenFromDB) {
+      throw ApiError.UnauthorizedError("Token doesn't exist in database");
+    }
+
+    const user = await UserModel.findById(userData.id);
+    const userDto = new UserDto(user);
+
+    return { user: userDto };
   }
 }
 

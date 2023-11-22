@@ -70,6 +70,16 @@ class UserContoller {
       next(err);
     }
   }
+
+  async getMe(req, res, next) {
+    try {
+      const { refreshToken } = req.cookies;
+      const userData = await userSevice.getUser(refreshToken);
+      return res.json(userData);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = new UserContoller();

@@ -7,7 +7,7 @@ class TokenService {
       expiresIn: "30m", // move to constants
     });
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
-      expiresIn: "30d", // move to constants
+      expiresIn: "10s", // move to constants
     });
 
     return { accessToken, refreshToken };

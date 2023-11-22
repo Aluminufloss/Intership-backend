@@ -26,4 +26,6 @@ router.get("/articles/:id", articleController.getArticleById);
 
 router.get("/categories", categoryController.getCategories);
 
+router.get("/user", userController.getMe);
+
 module.exports = router;
